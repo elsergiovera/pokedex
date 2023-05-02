@@ -1,131 +1,135 @@
 .pokedex {
-    display: flex;
+    display: inline-block;
     flex-direction: column;
-    align-items: left;
-    background-color: #f44336;
-    height: 550px;
-    width: 400px;
+    align-items: center;
+    background-color: #dc1830;
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 1);
+    height: 650px;
+    width: 425px;
     padding: 10px;
-    border-radius: 20px;
+    border-radius: 15px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    border: 2px solid #2d2b2c;
   }
   
-  .topRow {
-    display: flex;
-    justify-content: space-between;
+  .topScreen {
+    display: inline-block;
     align-items: flex-start;
-    width: 100%;
+    background-image: url('../public/top_screen.png');
+    background-repeat: no-repeat;
+    width: 405px;
+    height: 130px;
+    background-size: 403px 130px;
+    margin-bottom: -5px;
+    margin-left: -1px;
   }
 
-  .topCircleContainer {
-    display: flex;
-    align-items: flex-start;
-    margin-left: 5px;
-    margin-bottom: 10px;
-    perspective: 500px;
-  }
-  
-  /* .container {
-    perspective: 500px;
-  } */
-  
-  .cyanCircle {
-    height: 60px;
-    width: 60px;
-    background: radial-gradient(circle at 20% 20%, transparent 50%, rgba(255,255,255,0.2) 70%), radial-gradient(circle at 80% 80%, transparent 50%, rgba(0,0,0,0.2) 70%), cyan;
-    border-radius: 50%;
-    transform: rotateX(-10deg) rotateY(10deg);
-    transform-style: preserve-3d;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.8);
-  }
-  
-  .smallRedCircle {
-    height: 20px;
-    width: 20px;
-    background: radial-gradient(circle at 20% 20%, transparent 50%, rgba(255,0,0,0.3) 70%), radial-gradient(circle at 80% 80%, transparent 50%, rgba(255,0,0,0.1) 70%), red;
-    border-radius: 50%;
-    margin-top: 12px;
-    margin-left: 8px;
-    transform: rotateX(10deg) rotateY(-10deg);
-    transform-style: preserve-3d;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.8);
-  }
-  
-  .smallYellowCircle {
-    height: 20px;
-    width: 20px;
-    background: radial-gradient(circle at 20% 20%, transparent 50%, rgba(255,255,0,0.3) 70%), radial-gradient(circle at 80% 80%, transparent 50%, rgba(255,255,0,0.1) 70%), yellow;
-    border-radius: 50%;
-    margin-top: 12px;
-    margin-left: 8px;
-    transform: rotateX(-10deg) rotateY(-10deg);
-    transform-style: preserve-3d;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.8);
-  }
-  
-  .smallGreenCircle {
-    height: 20px;
-    width: 20px;
-    background: radial-gradient(circle at 20% 20%, transparent 50%, rgba(0,255,0,0.3) 70%), radial-gradient(circle at 80% 80%, transparent 50%, rgba(0,255,0,0.1) 70%), green;
-    border-radius: 50%;
-    margin-top: 12px;
-    margin-left: 8px;
-    transform: rotateX(10deg) rotateY(10deg);
-    transform-style: preserve-3d;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.8);
-  }
-  
-  .middleRow {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    height: 360px;
-  }
-  
-  .screen {
+  .screen {    
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    padding: 10px 10px;
-    background-color: #000000;
-    border: 20px solid #FFFFFF;
+    padding-top: 25px;
+    margin-left: -1px;
+    width: 405px;
+    height: 319px;
+    background-color: #dc1830;
+    background-image: url('../public/screen_background.png');
+    background-repeat: no-repeat;
+    background-size: 403px 319px;
   }
-  
-  .bottomRow {
-    /* display: flex; */
-    justify-content: space-between;
-    align-items: left;
-    width: 100%;
-    margin-top: 10px;
-  }
-  
-  .bottomMiddle {
-    height: 40px;
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 5px;
-    /* display: flex; */
-    justify-content: center;
-    align-items: center;
-    /* margin-left: 5px; */
-    padding-left: 10px;
-    color: #000000;
-    font-weight: bold;
-    font-size: 24px;
-    text-transform: uppercase;
+
+  .selectBar {
+    margin-top: 18px;
+    width: 220px;
+    height: 30px;
   }
 
   .select {
-    border: 2px solid black;
-    background-color: green;
+    border: 2px solid #3a2125;
+    background-color: #2d2b2c;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 17px;
+    font-weight: bold;
+    padding-left: 5px;
+    margin-left: 5px;
+    width: 100%;
+    height: 30px;
+  }
+
+  .searchBar {
+    margin-top: 6px;
+    width: 425px;
+    height: 30px;
+  }
+  
+  .searchText {
+    border: 4px solid #2d2b2c;
+    background-color: #11709e;
+    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1);
     color: white;
     font-family: "Courier New", Courier, monospace;
     font-size: 16px;
     font-weight: bold;
+    padding-left: 10px;
+    align-items: center;
+    width: 320px;
+    height: 30px;
+  }
+  .searchText::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .searchButton {
+    cursor: pointer;
+    border: 4px solid #2d2b2c;
+    background-color: #11709e;
+    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1);
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    width: 77px;
+    height: 30px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .searchButton:hover {
+    background-color: #0c4e6e;
+  }
+
+  .infoBar {
+    border: 4px solid #2d2b2c;
+    background-color: #4fa95f;
+    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1), inset 0 0 10px rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 110px;
+    margin-top: 8px;
+    padding-left: 10px;
+    padding-top: 5px;
+    color: white;
+    font-family: "Courier New", Courier, monospace;
+    font-size: 16px;
+    border-radius: 10px;
+    overflow: auto;
+    max-height: 110px;
+  }
+  .infoBar::-webkit-scrollbar {
+    width: 10px;
+  }
+  .infoBar::-webkit-scrollbar-thumb {
+    background-color: rgba(84, 53, 88, 0.3);
+    border-radius: 35px;
+  }
+  .infoBar::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  .bottomRow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-top: 8px;
   }

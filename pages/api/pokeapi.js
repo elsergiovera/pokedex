@@ -5,23 +5,36 @@ const listPokemon = async () => {
 
     return result.results;
   }
-  catch(err){
-    console.error(err);
+  catch(error){
+    console.error("listPokemon: " + error);
     return [];
   }
 };
 
-const getPokemonInfo = async (url) => {
-  try{
-    const response = await fetch(`${url}`);
+const getPokemonInfoByName = async (name) => {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
     const result = await response.json();
-
+    
     return result;
   }
-  catch(err){
-    console.error(err);
+  catch(error) {
+    console.error("getPokemonInfoByName: " + error);
+    return "";
+  }
+};
+
+const getPokemonDescription = async (name) => {
+  try{
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+    let result = await response.json();
+
+    return result.flavor_text_entries[0].flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ');
+  }
+  catch(error){
+    console.error("getPokemonInfoById: " + error);
     return [];
   }
 };
 
-export {listPokemon, getPokemonInfo};
+export {listPokemon, getPokemonInfoByName, getPokemonDescription};
