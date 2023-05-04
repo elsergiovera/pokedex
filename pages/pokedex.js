@@ -140,7 +140,12 @@ const Pokedex = () => {
             </Canvas>
           </div>
           <div className={styles.selectBar}>
-          <select id={"searchSelect"} className={styles.select} style={{textTransform: "capitalize"}} value={selectedPkmnList} onChange={handlerSearchSelect}>
+          <select
+            id={"searchSelect"}
+            className={styles.select}
+            style={{textTransform: "capitalize"}}
+            value={selectedPkmnList}
+            onChange={handlerSearchSelect}>
               <option key={0} value={""}>--</option>
               {pkmnList.length > 0 ? (
                 pkmnList.map((item, index) => (
@@ -153,7 +158,36 @@ const Pokedex = () => {
         </div>
         </div>
       <div className={styles.searchBar}>
-        <input type={"text"} id={"searchText"} placeholder={"Type the name to search"} className={styles.searchText} ref={pkmnSearchBarRef} onChange={(e) => pkmnSearchBarRef.current.value = e.target.value} onKeyDown={handlerOnKeyDownSearchBar} autoComplete="off" /> <button className={styles.searchButton} onClick={handlerSearchButton}>Find</button>
+        <input
+          type={"text"}
+          id={"searchText"}
+          placeholder={"Type the name to search"}
+          className={styles.searchText}
+          ref={pkmnSearchBarRef} onChange={(e) => pkmnSearchBarRef.current.value = e.target.value}
+          onKeyDown={handlerOnKeyDownSearchBar}
+          autoComplete="off"
+          list={"PkmnList"}
+          onInput={(input) => {
+              const datalist = document.getElementById("PkmnList");
+              if (input.value) {
+                datalist.style.display = "block";
+              } else {
+                datalist.style.display = "none";
+              }
+          }} />
+          &nbsp;
+          <button
+            className={styles.searchButton}
+            onClick={handlerSearchButton}>
+            Find
+          </button>
+        <datalist id={"PkmnList"}>
+            {(pkmnList.length > 0) ? (
+              pkmnList.map((item, index) => (
+                <option value={item.name}>{`#${index+1} - ${item.name}`}</option>
+              ))
+            ) : (<></>)}
+        </datalist>
       </div>
       <div className={styles.infoBar} ><PokemonInfo /></div>
       <div className={styles.bottomRow}>
