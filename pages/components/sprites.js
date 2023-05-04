@@ -1,32 +1,16 @@
-import React from "react";
+import { TextureLoader } from "three";
+import { useLoader } from "@react-three/fiber";
 
-export const Box = (props) => {
+const SpriteScene = (sprite) => {
+  const sprite = useLoader(TextureLoader, "../public/no_data.png");
+
   return (
-    <mesh {...props} recieveShadow={true} castShadow>
-      <boxBufferGeometry />
-      <meshPhysicalMaterial  color={"white"} />
+    <mesh scale={1.5}>
+      <directionalLight position={[0, 0, 5]} />
+      <planeGeometry  />
+      <meshStandardMaterial map={sprite} transparent/>
     </mesh>
   );
-}
+};
 
-export const LightBulb = (props) => {
-  return (
-    <mesh {...props} >
-      <pointLight castShadow />
-      <sphereBufferGeometry args={[0.2, 30, 10]} />
-      <meshPhongMaterial emissive={"yellow"}  />
-    </mesh>
-  );
-}
-
-// export const Floor = (props) => {
-//   return (
-//     <mesh {...props} recieveShadow>
-//       <boxBufferGeometry args={[20,1,10]} />
-//       <meshPhysicalMaterial color='white' />
-//     </mesh>
-//   );
-// }
-
-// export { Box, Floor, LightBulb };
-// export default Box;
+export default SpriteScene;
