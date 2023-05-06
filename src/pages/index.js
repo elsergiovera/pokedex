@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Pokedex from './pokedex.js'
+import Pokedex from '../components/pokedex.js'
 
 export default function Home() {
   return (

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from 'next/image'
 import styles from '@/styles/Pokedex.module.css'
-import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "./api/pokeapi";
+import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "../data/pokeapi";
 
 const Pokedex = () => {
   // variables.

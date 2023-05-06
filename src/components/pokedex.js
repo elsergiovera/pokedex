@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Canvas, useLoader } from "@react-three/fiber";
 // import SpriteScene from "./components/sprites"
 import { TextureLoader } from "three";
-import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "./api/pokeapi";
+import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
 
 const Pokedex = () => {
@@ -166,28 +166,20 @@ const Pokedex = () => {
           ref={pkmnSearchBarRef} onChange={(e) => pkmnSearchBarRef.current.value = e.target.value}
           onKeyDown={handlerOnKeyDownSearchBar}
           autoComplete="off"
-          list={"PkmnList"}
-          onInput={(input) => {
-              const datalist = document.getElementById("PkmnList");
-              if (input.value) {
-                datalist.style.display = "block";
-              } else {
-                datalist.style.display = "none";
-              }
-          }} />
+          list={"PkmnList"} />
           &nbsp;
           <button
             className={styles.searchButton}
             onClick={handlerSearchButton}>
             Find
           </button>
-        <datalist id={"PkmnList"}>
+        {/* <datalist id={"PkmnList"}>
             {(pkmnList.length > 0) ? (
               pkmnList.map((item, index) => (
                 <option value={item.name}>{`#${index+1} - ${item.name}`}</option>
               ))
             ) : (<></>)}
-        </datalist>
+        </datalist> */}
       </div>
       <div className={styles.infoBar} ><PokemonInfo /></div>
       <div className={styles.bottomRow}>
