@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from 'next/image'
+
 import { Canvas, useLoader } from "@react-three/fiber";
+import { Merged, OrbitControls } from '@react-three/drei'
 // import SpriteScene from "./components/sprites"
-import { TextureLoader } from "three";
+import { DoubleSide, TextureLoader, MeshStandardMaterial, FrontSide, Matrix4 } from "three";
+
 import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
+import { GeometryUtils } from "three-stdlib";
 
 const Pokedex = () => {
   // variables.
@@ -14,15 +18,22 @@ const Pokedex = () => {
   const [selectedPkmnInfo, setSelectedPkmnInfo] = useState("");
   const [selectedPkmnDescription, setPkmnDescription] = useState("");
 
-  const [srcSprite, setSrcSprite] = useState("no_data.png");
+  
+  const [srcFrontSprite, setSrcFrontSprite] = useState("no_data.png");
+  // const [srcFrontSprite, setSrcFrontSprite] = useState("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png");
+  // const [srcBackSprite, setSrcBackSprite] = useState("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/125.png");
   const SpriteScene = () => {
-    const sprite = useLoader(TextureLoader, srcSprite);
+    const frontSprite = useLoader(TextureLoader, srcFrontSprite);
+    // const backSprite = useLoader(TextureLoader, srcBackSprite);
 
     return (
-      <mesh scale={1.5}>
+      <mesh>
         <directionalLight position={[0, 0, 5]} />
-        <planeGeometry  />
-        <meshStandardMaterial map={sprite} />
+        <planeGeometry args={[1.5, 1.5, 2, 2]} />
+        <meshStandardMaterial map={frontSprite} />
+        {/* 
+        <planeGeometry id={"back"} args={[1.5, 1.5, 2, 2]} applyMatrix4={makeRotationY(Math.PI)}/>
+        <meshStandardMaterial map={backSprite} /> */}
       </mesh>
     );
   };
@@ -114,9 +125,9 @@ const Pokedex = () => {
   // selected Pokémon hook.
   useEffect(() => {
     if (selectedPkmnInfo !== "")
-      setSrcSprite(selectedPkmnInfo.sprites.other["official-artwork"].front_default)
+      setSrcFrontSprite(selectedPkmnInfo.sprites.other["official-artwork"].front_default)
     else
-      setSrcSprite("no_data.png");
+      setSrcFrontSprite("no_data.png");
     PokemonInfo();
 
   }, [selectedPkmnInfo]);
@@ -137,6 +148,18 @@ const Pokedex = () => {
               }}
             >
               <SpriteScene />
+              <OrbitControls
+                enableDamping={false}
+                // dampingFactor={0.1}
+                // enablePan={false}
+                enableRotate={true}
+                enableZoom={false}
+                rotateSpeed={0.5}
+                // minAzimuthAngle={-Math.PI / 4}
+                // maxAzimuthAngle={Math.PI / 4}
+                minPolarAngle={Math.PI / 2}
+                maxPolarAngle={Math.PI / 2}
+              />
             </Canvas>
           </div>
           <div className={styles.selectBar}>
