@@ -1,9 +1,13 @@
-const listPokemon = async () => {
+const getPokemonList = async () => {
   try{
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
     const result = await response.json();
 
-    return result.results;
+    const results = result.results.map((pkmn) => {
+      return pkmn.name.charAt(0).toUpperCase() + pkmn.name.slice(1);
+    })
+
+    return results;
   }
   catch(error){
     console.error("listPokemon: " + error);
@@ -11,10 +15,29 @@ const listPokemon = async () => {
   }
 };
 
-const getPokemonInfoByName = async (name) => {
+const getPokemonData = async (name) => {
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
-    const result = await response.json();
+    const response1 = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    const info = await response1.json();
+
+    const response2 = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
+    const description = await response2.json();
+
+    let en_description = "";
+    description.flavor_text_entries.map((entry) => {
+      if (entry.language.name === "en")
+      en_description = entry.flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ');
+    })
+
+    const result = ({
+      name: info.name,
+      height: info.height,
+      weight: info.weight,
+      types: info.types,
+      sprites: info.sprites,
+      description: en_description,
+      generation: description.generation.name.toUpperCase()
+    })
     
     return result;
   }
@@ -24,17 +47,4 @@ const getPokemonInfoByName = async (name) => {
   }
 };
 
-const getPokemonDescription = async (name) => {
-  try{
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
-    let result = await response.json();
-
-    return result.flavor_text_entries[0].flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ');
-  }
-  catch(error){
-    console.error("getPokemonInfoById: " + error);
-    return [];
-  }
-};
-
-export {listPokemon, getPokemonInfoByName, getPokemonDescription};
+export { getPokemonList, getPokemonData };

@@ -1,140 +1,105 @@
 .pokedex {
-    display: inline-block;
-    flex-direction: column;
-    align-items: center;
-    background-color: #dc1830;
-    box-shadow: 4px 4px 4px rgba(0, 0, 0, 1);
-    height: 650px;
-    width: 425px;
-    padding: 10px;
-    border-radius: 15px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid #2d2b2c;
-  }
-  
-  .topScreen {
-    display: inline-block;
-    align-items: flex-start;
-    background-image: url('../public/top_screen.png');
-    background-repeat: no-repeat;
-    width: 405px;
-    height: 130px;
-    background-size: 403px 130px;
-    margin-bottom: -5px;
-    margin-left: -1px;
-  }
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  background-color: #dc1830;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 1);
+  height: 650px;
+  width: 425px;
+  padding: 10px;
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid #2d2b2c;
+}
 
-  .screen {    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 12px;
-    margin-left: -1px;
-    width: 405px;
-    height: 319px;
-    background-color: #dc1830;
-    background-image: url('../public/screen_background.png');
-    background-repeat: no-repeat;
-    background-size: 403px 319px;
-  }
+.topScreen {
+  display: inline-block;
+  align-items: flex-start;
+  background-image: url('../public/top_screen.png');
+  background-repeat: no-repeat;
+  width: 405px;
+  height: 130px;
+  background-size: 403px 130px;
+  margin-bottom: -5px;
+  margin-left: -1px;
+}
+.screen {    
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+  margin-left: -1px;
+  width: 405px;
+  height: 319px;
+  background-color: #dc1830;
+  background-image: url('../public/screen_background.png');
+  background-repeat: no-repeat;
+  background-size: 403px 319px;
+}
+.screenCanvas {
+  width: 350px;
+  height: 240px;
+}
 
-  .screenCanvas {
-    width: 350px;
-    height: 240px;
-  }
+.searchText {
+  border: 5px solid #3a2125;
+  background-color: #11709e;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 10px;
+  align-items: center;
+  margin-top: 10px;
+  width: 320px;
+  height: 30px;
+}
+.searchText:focus {
+  background-color: #1385be;
+}
+.searchText::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+.searchText::-webkit-search-cancel-button {
+  color: white;
+  font-weight: bold;
+  font-family: "Courier New", Courier, monospace;
+}
 
-  .selectBar {
-    margin-top: 12px;
-    width: 220px;
-    height: 30px;
-  }
+.infoBar {
+  border: 4px solid #2d2b2c;
+  background-color: #4fa95f;
+  box-shadow: 0px 3px 3px rgba(100, 15, 30, 1), inset 0 0 10px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 150px;
+  margin-top: 8px;
+  padding-left: 10px;
+  padding-top: 5px;
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 16px;
+  border-radius: 10px;
+  overflow: auto;
+  max-height: 150px;
+}
+.infoBar::-webkit-scrollbar {
+  width: 10px;
+}
+.infoBar::-webkit-scrollbar-thumb {
+  background-color: rgba(84, 53, 88, 0.3);
+  border-radius: 35px;
+}
+.infoBar::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0);
+}
 
-  .select {
-    border: 2px solid #3a2125;
-    background-color: #2d2b2c;
-    color: white;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 17px;
-    font-weight: bold;
-    padding-left: 5px;
-    margin-left: 5px;
-    width: 100%;
-    height: 30px;
-  }
-
-  .searchBar {
-    margin-top: 6px;
-    width: 425px;
-    height: 30px;
-  }
-  
-  .searchText {
-    border: 4px solid #2d2b2c;
-    background-color: #11709e;
-    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1);
-    color: white;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 16px;
-    font-weight: bold;
-    padding-left: 10px;
-    align-items: center;
-    width: 320px;
-    height: 30px;
-  }
-  .searchText::placeholder {
-    color: rgba(255, 255, 255, 0.5);
-  }
-
-  .searchButton {
-    cursor: pointer;
-    border: 4px solid #2d2b2c;
-    background-color: #11709e;
-    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1);
-    color: white;
-    font-family: "Courier New", Courier, monospace;
-    width: 77px;
-    height: 30px;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  .searchButton:hover {
-    background-color: #0c4e6e;
-  }
-
-  .infoBar {
-    border: 4px solid #2d2b2c;
-    background-color: #4fa95f;
-    box-shadow: 0px 3px 3px rgba(151, 14, 30, 1), inset 0 0 10px rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 110px;
-    margin-top: 8px;
-    padding-left: 10px;
-    padding-top: 5px;
-    color: white;
-    font-family: "Courier New", Courier, monospace;
-    font-size: 16px;
-    border-radius: 10px;
-    overflow: auto;
-    max-height: 110px;
-  }
-  .infoBar::-webkit-scrollbar {
-    width: 10px;
-  }
-  .infoBar::-webkit-scrollbar-thumb {
-    background-color: rgba(84, 53, 88, 0.3);
-    border-radius: 35px;
-  }
-  .infoBar::-webkit-scrollbar-track {
-    background-color: rgba(255, 255, 255, 0);
-  }
-
-  .bottomRow {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 8px;
-  }
+.bottomRow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+}

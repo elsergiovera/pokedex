@@ -4,32 +4,15 @@ import Image from 'next/image'
 import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 import { TextureLoader } from "three";
-import { listPokemon, getPokemonInfoByName, getPokemonDescription } from "../data/pokeapi";
+import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
 
 const Pokedex = () => {
   // variables.
-  const pkmnSearchBarRef = useRef();
   const [pkmnList, setPkmnList] = useState([]);
   const [selPkmn, setSelPkmn] = useState("");
   const [pkmnData, setPkmnData] = useState("");
-  const [pkmnDataDescription, setPkmnDataDescription] = useState("");
   const [srcFrontSprite, setSrcFrontSprite] = useState("");
-  
-  // const cameraRef = useRef();
-  // const controlsRef = useRef();
-  // const handleMouseMove = (event) => {
-  //   const controls = controlsRef.current;
-  //   const canvas = event.target;
-
-  //   if (controls && canvas) {
-  //     const { clientWidth, clientHeight } = canvas;
-  //     const { movementX, movementY } = event;
-
-  //     controls.target.x -= movementX / clientWidth;
-  //     controls.target.y += movementY / clientHeight;
-  //   }
-  // };
 
   // functions
   const SpriteScene = () => {
@@ -46,34 +29,23 @@ const Pokedex = () => {
         </mesh>
       );
     }
-    
-    // useFrame(() => {
-    //   const controls = controlsRef.current;
-    //   const camera = cameraRef.current;
-  
-    //   if (controls && camera) {
-    //     camera.position.x = controls.target.x + Math.sin(Date.now() / 2000) * 2;
-    //     camera.position.y = controls.target.y + Math.sin(Date.now() / 2000) * 2;
-    //     camera.lookAt(controls.target);
-    //   }
-    // });
   };
   const PokemonInfo = () => {
     let info = "";
 
     if(pkmnData != "") {
-      // set Info.
-      info = 
+      info = (pkmnData.types.length > 1 ? "<strong>Types:</strong> " : "<strong>Type:</strong> ")
+      pkmnData.types.map((item, index) => (
+        info = info + item.type.name.charAt(0).toUpperCase() + item.type.name.slice(1) + (pkmnData.types.length-1 === index ? ".<br>" : ", ")
+      ))
+      info = info +
       "<strong>Height:</strong> " + pkmnData.height * 10 + " cms.<br>" +
       "<strong>Weight:</strong> " + pkmnData.weight / 10 + " kgs.<br>" +
-      "<strong>Types:</strong> ";
-      pkmnData.types.map((item, index) => (
-        info = info + item.type.name + (pkmnData.types.length-1 === index ? "<br>" : ", ")
-      ))
-      info = info + "<strong>Description:</strong> " + pkmnDataDescription;
+      "<strong>Description:</strong> " + pkmnData.description + "<br>" +
+      "<strong>Avaliable Since:</strong> " + pkmnData.generation;
     }
     else {
-      info = "<strong>No data</strong>";
+      info = "";
     }
 
     return (
@@ -81,42 +53,33 @@ const Pokedex = () => {
     );
   };
 
-  // handlers for Search Bar, Button and Select.
-  const handlerSearchSelect = (event) => {
-    setSelPkmn(event.target.value);
-    pkmnSearchBarRef.current.value = "";
-  };
-  const handlerOnKeyDownSearchBar = (event) => {
-    if (event.key === "Enter") {
-      handlerSearchButton();
-      pkmnSearchBarRef.current.value = event.target.value;
-    }
-  };
-  const handlerSearchButton = () => {
-    const getPkmnInfo = async () => {
-      if (pkmnSearchBarRef.current.value != "") {
-        const info = await getPokemonInfoByName(pkmnSearchBarRef.current.value);       
-        setPkmnData(info);
+  // handler for Search Bar.
+  const handlerOnChangeSearchBar = (event) => {
+    const search = event.target.value.toLowerCase();
 
-        if(info != "") {
-          const description = await getPokemonDescription(pkmnSearchBarRef.current.value); 
-          setPkmnDataDescription(description);
+    if (pkmnList.find(pkmn => pkmn.toLowerCase() === search)) {
+      const getPkmnInfo = async () => {
+        if (search != "") {
+          const result = await getPokemonData(search);
+
+          setPkmnData(result);
+          setSelPkmn(search);
         }
         else
-          setPkmnDataDescription("");
-
-        setSelPkmn(pkmnSearchBarRef.current.value);
+          setPkmnData("");
       }
-      else
-        setPkmnData("");
+      getPkmnInfo();
     }
-    getPkmnInfo();
+    else {
+      setPkmnData("");
+      setSelPkmn("");
+    }
   };
 
   // first Load hook.
   useEffect(() => {
     const getPkmnList = async () => {
-      const resp = await listPokemon();
+      const resp = await getPokemonList();
 
       if(resp.length > 0) {
         setPkmnList(resp);
@@ -128,16 +91,12 @@ const Pokedex = () => {
   useEffect(() => {
     const getPkmnInfo = async () => {
       if (selPkmn != "") {
-        const info = await getPokemonInfoByName(selPkmn);       
-        setPkmnData(info);
-
-        const description = await getPokemonDescription(selPkmn);
-        setPkmnDataDescription(description);
+        const result = await getPokemonData(selPkmn);       
+        setPkmnData(result);
       }
       else {
         setSelPkmn("");
         setPkmnData("");
-        setPkmnDataDescription("");
       }
 
     }
@@ -159,8 +118,7 @@ const Pokedex = () => {
         <div className={styles.screen}>
           <div className={styles.screenCanvas}>
             <Canvas
-              // onMouseMove={handleMouseMove}
-              style={{ border: "10px solid #2d2b2c", backgroundColor: "#4fa95f" }}
+              style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
               shadows="soft"
               camera={{
                 fov: 75,
@@ -169,12 +127,8 @@ const Pokedex = () => {
                 position: [0, 0, 1]
               }}
             >
-              {/* <perspectiveCamera
-                ref={cameraRef}
-                position={[0, 0, 10]} /> */}
               <SpriteScene />
               <OrbitControls
-                // ref={controlsRef}
                 enableDamping={false}
                 enableRotate={true}
                 enableZoom={false}
@@ -186,48 +140,16 @@ const Pokedex = () => {
               />
             </Canvas>
           </div>
-          <div className={styles.selectBar}>
-          <select
-            id={"searchSelect"}
-            className={styles.select}
-            style={{textTransform: "capitalize"}}
-            value={selPkmn}
-            onChange={handlerSearchSelect}>
-              <option key={0} value={""}>--</option>
-              {pkmnList.length > 0 ? (
-                pkmnList.map((item, index) => (
-                  <option key={index} value={item.name}>#{index+1} - {item.name}</option>
-                ))
-              ) : (
-                <option value="">No Data Available</option>
-              )}
-            </select>
+          <input
+            type={"search"}
+            id={"searchText"}
+            placeholder={"Type the Pokémon name"}
+            className={styles.searchText}
+            onChange={handlerOnChangeSearchBar}
+            autoComplete="off"
+            list={"PkmnList"} />
+            &nbsp;
         </div>
-        </div>
-      <div className={styles.searchBar}>
-        <input
-          type={"text"}
-          id={"searchText"}
-          placeholder={"Type the name to search"}
-          className={styles.searchText}
-          ref={pkmnSearchBarRef} onChange={(e) => pkmnSearchBarRef.current.value = e.target.value}
-          onKeyDown={handlerOnKeyDownSearchBar}
-          autoComplete="off"
-          list={"PkmnList"} />
-          &nbsp;
-          <button
-            className={styles.searchButton}
-            onClick={handlerSearchButton}>
-            Find
-          </button>
-        {/* <datalist id={"PkmnList"}>
-            {(pkmnList.length > 0) ? (
-              pkmnList.map((item, index) => (
-                <option key={index} value={item.name}>{`#${index+1} - ${item.name}`}</option>
-              ))
-            ) : (<></>)}
-        </datalist> */}
-      </div>
       <div className={styles.infoBar} ><PokemonInfo /></div>
       <div className={styles.bottomRow}>
         <Image
