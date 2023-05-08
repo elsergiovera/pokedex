@@ -114,50 +114,62 @@ const Pokedex = () => {
 
   return (
     <div className={styles.pokedex}>
-      <div className={styles.topScreen} />
-        <div className={styles.screen}>
-          <div className={styles.screenCanvas}>
-            <Canvas
-              style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
-              shadows="soft"
-              camera={{
-                fov: 75,
-                near: 0.1,
-                far: 1000,
-                position: [0, 0, 1]
-              }}
-            >
-              <SpriteScene />
-              <OrbitControls
-                enableDamping={false}
-                enableRotate={true}
-                enableZoom={false}
-                rotateSpeed={0.5}
-                minAzimuthAngle={-Math.PI / 20}
-                maxAzimuthAngle={Math.PI / 20}
-                minPolarAngle={Math.PI / 2 - 0.1}
-                maxPolarAngle={Math.PI / 2 + 0.1}
-              />
-            </Canvas>
-          </div>
-          <input
-            type={"search"}
-            id={"searchText"}
-            placeholder={"Type the Pokémon name"}
-            className={styles.searchText}
-            onChange={handlerOnChangeSearchBar}
-            autoComplete="off"
-            list={"PkmnList"} />
-            &nbsp;
+      <div className={styles.innerBorder}>
+        {/* Left Side */}
+        <div className={styles.leftSide} >
+          <div className={styles.topScreenLeft} />
+            <div className={styles.screenLeft}>
+              <div className={styles.screenLeftCanvas}>
+                <Canvas
+                  style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
+                  shadows="soft"
+                  camera={{
+                    fov: 75,
+                    near: 0.1,
+                    far: 1000,
+                    position: [0, 0, 1]
+                  }}
+                >
+                  <SpriteScene />
+                  <OrbitControls
+                    enableDamping={false}
+                    enableRotate={true}
+                    enableZoom={false}
+                    rotateSpeed={0.5}
+                    minAzimuthAngle={-Math.PI / 20}
+                    maxAzimuthAngle={Math.PI / 20}
+                    minPolarAngle={Math.PI / 2 - 0.1}
+                    maxPolarAngle={Math.PI / 2 + 0.1}
+                  />
+                </Canvas>
+              </div>
+              <input
+                type={"search"}
+                id={"searchText"}
+                placeholder={"Type the Pokémon name"}
+                className={styles.searchText}
+                onChange={handlerOnChangeSearchBar}
+                autoComplete="off"
+                list={"PkmnList"} />
+            </div>
+          <div className={styles.infoBar} ><PokemonInfo /></div>
+          <div className={styles.bottomRow} />
         </div>
-      <div className={styles.infoBar} ><PokemonInfo /></div>
-      <div className={styles.bottomRow}>
-        <Image
-            src="/buttons.png"
-            width={150}
-            height={19}
-            alt=""
-          />
+        {/* Center Fold */}
+        <div className={styles.centerFold} />
+        {/* Right Side */}
+        <div className={styles.rightSide} >
+          <div className={styles.topScreenRight} />
+            <div className={styles.screenRight}>
+              <div className={styles.screenRightCanvas} />
+            </div>
+          <div className={styles.screenRightBlueButtons} >
+            <Image src="/blue_buttons.png" width={300} height={112} alt="" />
+          </div>
+          <div className={styles.bottomRow}>
+            <Image src="/bottom_buttons_2.png" width={150} height={19} alt="" />
+          </div>
+        </div>
       </div>
     </div>
   );
