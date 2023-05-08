@@ -164,7 +164,7 @@ const Pokedex = () => {
               <div className={styles.screenRightCanvas} />
             </div>
           <div className={styles.screenRightBlueButtons} >
-            <Image src="/blue_buttons.png" width={300} height={112} alt="" />
+            <Image src="/blue_buttons_2.png" width={300} height={112} alt="" />
           </div>
           <div className={styles.bottomRow}>
             <Image src="/bottom_buttons_2.png" width={150} height={19} alt="" />

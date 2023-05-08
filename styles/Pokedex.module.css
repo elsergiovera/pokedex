@@ -1,7 +1,7 @@
 /* MAIN */
 .innerBorder, .pokedex {
   height: 640px;
-  width: 875px;
+  width: 890px;
   padding: 10px 10px 10px 10px;
   position: absolute;
   top: 50%;
@@ -30,10 +30,10 @@
 .leftSide, .rightSide {
   display: inline-block;
   height: 610px;
-  width: 410px;
+  width: 418px;
 }
 .rightSide {
-  padding-left: 5px;
+  padding-left: 12px;
 }
  /* TOP SCREENS */
 .topScreenLeft, .topScreenRight {
