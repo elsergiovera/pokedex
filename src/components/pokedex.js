@@ -13,8 +13,9 @@ const Pokedex = () => {
   const [pkmnData, setPkmnData] = useState("");
   const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
 
-  const [srcFrontSpriteDefault, setSrcFrontSpriteDefault] = useState("");
-  const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
+  const [srcFrontSprite, setSrcFrontSprite] = useState("");
+  const [srcBackSprite, setSrcBackSprite] = useState("");
+  // const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
 
   // functions
   const ArtworkScene = () => {
@@ -33,8 +34,8 @@ const Pokedex = () => {
     }
   };
   const SpritesScene = () => {
-    if(srcFrontSpriteDefault == "" ||
-      srcFrontSpriteShiny == "")
+    if(srcFrontSprite == "" ||
+    srcBackSprite == "")
       return (
         <></>
       )
@@ -42,14 +43,15 @@ const Pokedex = () => {
       return (
         <>
           <directionalLight position={[0, 0, 5]} />
-          <mesh position={[-0.6, 0, 0]}>
+          <mesh position={[0, 0, 0]}>
             <planeGeometry args={[1.2, 1.2, 1, 1]}  />
-            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSpriteDefault)} transparent={true} />
+            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSprite)} transparent={true} />
           </mesh>
 
-          <mesh position={[0.6, 0, 0]}>
+          <directionalLight position={[0, 0, -5]} />
+          <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
             <planeGeometry args={[1.2, 1.2, 1, 1]} />
-            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSpriteShiny)} transparent={true} />
+            <meshStandardMaterial map={useLoader(TextureLoader, srcBackSprite)} transparent={true} />
           </mesh>
         </>
       );
@@ -131,13 +133,13 @@ const Pokedex = () => {
   useEffect(() => {
     if (pkmnData !== "") {
       setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default)
-      setSrcFrontSpriteDefault(pkmnData.sprites.front_default);
-      setSrcFrontSpriteShiny(pkmnData.sprites.front_shiny);
+      setSrcFrontSprite(pkmnData.sprites.front_default);
+      setSrcBackSprite(pkmnData.sprites.back_default);
     }
     else {
       setSrcFrontArtwork("");
-      setSrcFrontSpriteDefault("");
-      setSrcFrontSpriteShiny("");
+      setSrcFrontSprite("");
+      setSrcBackSprite("");
     }
     PokemonInfo();
 
@@ -204,14 +206,25 @@ const Pokedex = () => {
                   }}
                 >
                   <SpritesScene />
+                  <OrbitControls
+                  enableDamping={false}
+                  enableRotate={true}
+                  enableZoom={false}
+                  rotateSpeed={0.5}
+                  minPolarAngle={Math.PI / 2}
+                  maxPolarAngle={Math.PI - Math.PI / 2}
+                />
                 </Canvas>
-
-              {/* <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png" width={120} height={120} alt="" />&nbsp;
-              <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/149.png" width={120} height={120} alt="" /> */}
+            </div>
+            <div className={styles.screenRightInfo}>
+              Generation: <br />
+              Height: <br />
+              Weight: <br />
             </div>
           </div>
           <div className={styles.screenRightBlueButtons} >
             <Image src="/blue_buttons_2.png" width={300} height={112} alt="" />
+            {/* <div className={styles.infoBar} ><PokemonInfo /></div> */}
           </div>
           <div className={styles.bottomRow}>
             <Image src="/bottom_buttons_2.png" width={150} height={19} alt="" />

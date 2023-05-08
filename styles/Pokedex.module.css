@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap');
+
 /* MAIN */
 .innerBorder, .pokedex {
   height: 640px;
@@ -55,13 +57,18 @@
   margin-top: -1px;
   width: 405px;
   height: 320px;
+  /* box-shadow: 0px 3px 3px rgba(100, 15, 30, 1); */
   background-image: url('../public/screen_background_left.png');
   background-repeat: no-repeat;
   background-size: 405px 320px;
 }
-.screenRight {    
-  padding-top: 20px;
+.screenRight {
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 0px;
+  width: 405px;
   height: 250px;
+  /* box-shadow: 0px 3px 3px rgba(100, 15, 30, 1); */
   background-image: url('../public/screen_background_right.png');
   background-size: 405px 250px;
 }
@@ -71,13 +78,28 @@
   height: 240px;
 }
 .screenRightCanvas {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   
   background-color: #2d2b2c;
-  width: 330px;
-  height: 200px;
+  width: 190px;
+  height: 190px;
+}
+.screenRightInfo {
+  display: flex;
+  align-items: center;
+
+  color: white;
+  font-family: 'Press Start 2P';
+  font-size: 10px;
+  line-height: 18px;
+  /* font-weight: bold; */
+  
+  padding-left: 10px;
+  background-color: #5c5a5b;
+  width: 130px;
+  height: 190px;
 }
 /* SEARCH BAR */
 .searchBar {
@@ -116,7 +138,7 @@
   padding-top: 5px;
   color: white;
   font-family: "Courier New", Courier, monospace;
-  font-size: 16px;
+  font-size: 18px;
   border-radius: 10px;
   overflow: auto;
   max-height: 150px;
