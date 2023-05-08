@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from 'next/image'
-// import SpriteScene from "./components/sprites";
 import { Canvas, useLoader, useFrame } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 import { TextureLoader } from "three";
@@ -12,11 +11,14 @@ const Pokedex = () => {
   const [pkmnList, setPkmnList] = useState([]);
   const [selPkmn, setSelPkmn] = useState("");
   const [pkmnData, setPkmnData] = useState("");
-  const [srcFrontSprite, setSrcFrontSprite] = useState("");
+  const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
+
+  const [srcFrontSpriteDefault, setSrcFrontSpriteDefault] = useState("");
+  const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
 
   // functions
-  const SpriteScene = () => {
-    if(srcFrontSprite == "")
+  const ArtworkScene = () => {
+    if(srcFrontArtwork == "")
       return (
         <></>
       )
@@ -25,8 +27,31 @@ const Pokedex = () => {
         <mesh>
           <directionalLight position={[0, 0, 5]} />
           <planeGeometry args={[1.4, 1.4, 2, 2]} />
-          <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSprite)} transparent={true} />
+          <meshStandardMaterial map={useLoader(TextureLoader, srcFrontArtwork)} transparent={true} />
         </mesh>
+      );
+    }
+  };
+  const SpritesScene = () => {
+    if(srcFrontSpriteDefault == "" ||
+      srcFrontSpriteShiny == "")
+      return (
+        <></>
+      )
+    else {
+      return (
+        <>
+          <directionalLight position={[0, 0, 5]} />
+          <mesh position={[-0.6, 0, 0]}>
+            <planeGeometry args={[1.2, 1.2, 1, 1]}  />
+            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSpriteDefault)} transparent={true} />
+          </mesh>
+
+          <mesh position={[0.6, 0, 0]}>
+            <planeGeometry args={[1.2, 1.2, 1, 1]} />
+            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSpriteShiny)} transparent={true} />
+          </mesh>
+        </>
       );
     }
   };
@@ -104,10 +129,16 @@ const Pokedex = () => {
   }, [selPkmn]);
   // selected Pokémon hook.
   useEffect(() => {
-    if (pkmnData !== "")
-      setSrcFrontSprite(pkmnData.sprites.other["official-artwork"].front_default)
-    else
-      setSrcFrontSprite("");
+    if (pkmnData !== "") {
+      setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default)
+      setSrcFrontSpriteDefault(pkmnData.sprites.front_default);
+      setSrcFrontSpriteShiny(pkmnData.sprites.front_shiny);
+    }
+    else {
+      setSrcFrontArtwork("");
+      setSrcFrontSpriteDefault("");
+      setSrcFrontSpriteShiny("");
+    }
     PokemonInfo();
 
   }, [pkmnData]);
@@ -118,40 +149,40 @@ const Pokedex = () => {
         {/* Left Side */}
         <div className={styles.leftSide} >
           <div className={styles.topScreenLeft} />
-            <div className={styles.screenLeft}>
-              <div className={styles.screenLeftCanvas}>
-                <Canvas
-                  style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
-                  shadows="soft"
-                  camera={{
-                    fov: 75,
-                    near: 0.1,
-                    far: 1000,
-                    position: [0, 0, 1]
-                  }}
-                >
-                  <SpriteScene />
-                  <OrbitControls
-                    enableDamping={false}
-                    enableRotate={true}
-                    enableZoom={false}
-                    rotateSpeed={0.5}
-                    minAzimuthAngle={-Math.PI / 20}
-                    maxAzimuthAngle={Math.PI / 20}
-                    minPolarAngle={Math.PI / 2 - 0.1}
-                    maxPolarAngle={Math.PI / 2 + 0.1}
-                  />
-                </Canvas>
-              </div>
-              <input
-                type={"search"}
-                id={"searchText"}
-                placeholder={"Type the Pokémon name"}
-                className={styles.searchText}
-                onChange={handlerOnChangeSearchBar}
-                autoComplete="off"
-                list={"PkmnList"} />
+          <div className={styles.screenLeft}>
+            <div className={styles.screenLeftCanvas}>
+              <Canvas
+                style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
+                shadows="soft"
+                camera={{
+                  fov: 75,
+                  near: 0.1,
+                  far: 1000,
+                  position: [0, 0, 1]
+                }}
+              >
+                <ArtworkScene />
+                <OrbitControls
+                  enableDamping={false}
+                  enableRotate={true}
+                  enableZoom={false}
+                  rotateSpeed={0.5}
+                  minAzimuthAngle={-Math.PI / 20}
+                  maxAzimuthAngle={Math.PI / 20}
+                  minPolarAngle={Math.PI / 2 - 0.1}
+                  maxPolarAngle={Math.PI / 2 + 0.1}
+                />
+              </Canvas>
             </div>
+            <input
+              type={"search"}
+              id={"searchBar"}
+              placeholder={"Type the Pokémon name"}
+              className={styles.searchBar}
+              onChange={handlerOnChangeSearchBar}
+              autoComplete="off"
+              list={"PkmnList"} />
+          </div>
           <div className={styles.infoBar} ><PokemonInfo /></div>
           <div className={styles.bottomRow} />
         </div>
@@ -160,9 +191,25 @@ const Pokedex = () => {
         {/* Right Side */}
         <div className={styles.rightSide} >
           <div className={styles.topScreenRight} />
-            <div className={styles.screenRight}>
-              <div className={styles.screenRightCanvas} />
+          <div className={styles.screenRight}>
+            <div className={styles.screenRightCanvas}>
+              <Canvas
+                  style={{ border: "10px solid #2d2b2c", backgroundColor: "#2d2b2c" }}
+                  shadows="soft"
+                  camera={{
+                    fov: 75,
+                    near: 0.1,
+                    far: 1000,
+                    position: [0, 0, 1]
+                  }}
+                >
+                  <SpritesScene />
+                </Canvas>
+
+              {/* <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png" width={120} height={120} alt="" />&nbsp;
+              <Image src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/149.png" width={120} height={120} alt="" /> */}
             </div>
+          </div>
           <div className={styles.screenRightBlueButtons} >
             <Image src="/blue_buttons_2.png" width={300} height={112} alt="" />
           </div>

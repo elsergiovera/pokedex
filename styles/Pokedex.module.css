@@ -60,6 +60,7 @@
   background-size: 405px 320px;
 }
 .screenRight {    
+  padding-top: 20px;
   height: 250px;
   background-image: url('../public/screen_background_right.png');
   background-size: 405px 250px;
@@ -70,12 +71,16 @@
   height: 240px;
 }
 .screenRightCanvas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
   background-color: #2d2b2c;
   width: 330px;
   height: 200px;
 }
 /* SEARCH BAR */
-.searchText {
+.searchBar {
   border: 5px solid #3a2125;
   background-color: #11709e;
   color: white;
@@ -88,13 +93,13 @@
   width: 320px;
   height: 30px;
 }
-.searchText:focus {
+.searchBar:focus {
   background-color: #1385be;
 }
-.searchText::placeholder {
+.searchBar::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
-.searchText::-webkit-search-cancel-button {
+.searchBar::-webkit-search-cancel-button {
   color: white;
   font-weight: bold;
   font-family: "Courier New", Courier, monospace;
