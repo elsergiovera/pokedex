@@ -90,11 +90,11 @@
 }
 
 /* CANVAS */
-.screenLeftCanvas, .screenRightCanvas {
+.bigScreenCanvas, .smallScreenCanvas {
   width: 350px;
   height: 340px;
 }
-.screenRightCanvas {
+.smallScreenCanvas {
   /* width: 175px; */
   height: 160px;
 }

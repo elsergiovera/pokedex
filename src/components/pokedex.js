@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from 'next/image'
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
-import { TextureLoader } from "three";
 import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
+
+import { BigScreen, SmallScreen } from "./screens"
 
 const Pokedex = () => {
   // variables.
   const [pkmnList, setPkmnList] = useState([]);
-  const [selPkmn, setSelPkmn] = useState("");
   const [pkmnData, setPkmnData] = useState("");
 
   // sprites
@@ -20,49 +20,6 @@ const Pokedex = () => {
   const [srcBackSpriteShiny, setSrcBackSpriteShiny] = useState("");
   const spriteRef = useRef();
   
-
-  // components
-  const ArtworkScene = () => {
-    if(srcFrontArtwork == "")
-      return (
-        <></>
-      )
-    else {
-      return (
-        <mesh>
-          <directionalLight position={[0, 0, 5]} />
-          <planeGeometry args={[1.4, 1.4, 2, 2]} />
-          <meshStandardMaterial map={useLoader(TextureLoader, srcFrontArtwork)} transparent={true} />
-        </mesh>
-      );
-    }
-  };
-  const SpritesScene = () => {
-    
-    useFrame(({clock}) => {
-      if(spriteRef.current != undefined)
-        spriteRef.current.rotation.y = clock.getElapsedTime() * 2
-    });
-
-    if(srcFrontSprite != "" ||
-    srcBackSprite != "") {
-      return (
-        <>
-          <directionalLight position={[0, 0, 5]} />
-          <mesh ref={spriteRef} position={[0, 0, 0]} >
-            <mesh position={[0, 0, 0]}>
-              <planeGeometry args={[1.5, 1.5, 1, 1]} />
-              <meshBasicMaterial map={useLoader(TextureLoader, srcFrontSprite)} transparent={true} />
-            </mesh>
-            <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
-              <planeGeometry args={[1.5, 1.5, 1, 1]}  />
-              <meshBasicMaterial map={useLoader(TextureLoader, srcBackSprite)} transparent={true} />
-            </mesh>
-          </mesh>
-        </>
-      );
-    }
-  };
   const PokemonInfo = () => {
     let info = "";
 
@@ -96,7 +53,6 @@ const Pokedex = () => {
           const result = await getPokemonData(search);
 
           setPkmnData(result);
-          setSelPkmn(search);
         }
         else
           setPkmnData("");
@@ -105,7 +61,6 @@ const Pokedex = () => {
     }
     else {
       setPkmnData("");
-      setSelPkmn("");
     }
   };
 
@@ -123,7 +78,7 @@ const Pokedex = () => {
   // selected Pokémon hook.
   useEffect(() => {
     if (pkmnData !== "") {
-      setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default)
+      setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default);
       setSrcFrontSprite(pkmnData.sprites.front_default);
       setSrcBackSprite(pkmnData.sprites.back_default);
     }
@@ -143,7 +98,7 @@ const Pokedex = () => {
         <div className={styles.leftSide} >
           <div className={styles.topScreenLeft} />
           <div className={styles.screenLeft}>
-            <div className={styles.screenLeftCanvas}>
+            <div className={styles.bigScreenCanvas}>
               <Canvas
                 style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
                 shadows="soft"
@@ -154,7 +109,7 @@ const Pokedex = () => {
                   position: [0, 0, 1]
                 }}
               >
-                <ArtworkScene />
+                <BigScreen frontArtwork={srcFrontArtwork}  />
                 <OrbitControls
                   enableDamping={false}
                   enableRotate={true}
@@ -188,7 +143,7 @@ const Pokedex = () => {
         <div className={styles.rightSide} >
           <div className={styles.topScreenRight} />
           <div className={styles.screenRight}>
-            <div className={styles.screenRightCanvas}>
+            <div className={styles.smallScreenCanvas}>
               <Canvas
                   style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
                   shadows="soft"
@@ -199,7 +154,7 @@ const Pokedex = () => {
                     position: [0, 0, 1]
                   }}
                 >
-                  <SpritesScene />
+                  <SmallScreen spriteRef={spriteRef} frontSprite={srcFrontSprite} backSprite={srcBackSprite} />
                 </Canvas>
             </div>
             {/* <div className={styles.screenRightInfo}>
