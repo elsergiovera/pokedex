@@ -19,6 +19,7 @@
   border-radius: 15px;
   border: 4px solid #2d2b2c;
 }
+
 /* CENTER FOLD */
 .centerFold {
   display: inline-block;
@@ -28,6 +29,7 @@
   height: 607px;
   background-size: 25px 607px;
 }
+
 /* SIDES */
 .leftSide, .rightSide {
   display: inline-block;
@@ -37,6 +39,18 @@
 .rightSide {
   padding-left: 12px;
 }
+.panelRight, .panelLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 12px;
+  width: 405px;
+  height: 240px;
+}
+.panelLeft {
+  height:80px;
+}
+
  /* TOP SCREENS */
 .topScreenLeft, .topScreenRight {
   background-image: url('../public/top_screen_left.png');
@@ -48,43 +62,41 @@
 .topScreenRight {
   background-image: url('../public/top_screen_right.png');
 }
+
 /* SCREENS */
 .screenLeft, .screenRight {    
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 12px;
+  justify-content: center;
   margin-top: -1px;
   width: 405px;
-  height: 320px;
-  /* box-shadow: 0px 3px 3px rgba(100, 15, 30, 1); */
-  background-image: url('../public/screen_background_left.png');
+  height: 380px;
+  background-image: url('../public/screen_background_right.png');
   background-repeat: no-repeat;
-  background-size: 405px 320px;
+  background-size: 405px 380px;
 }
 .screenRight {
-  flex-direction: row;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  /* flex-direction: column; */
+
   justify-content: center;
-  padding-top: 0px;
-  width: 405px;
-  height: 250px;
-  /* box-shadow: 0px 3px 3px rgba(100, 15, 30, 1); */
-  background-image: url('../public/screen_background_right.png');
-  background-size: 405px 250px;
+  background-image: url('../public/screen_background_left.png');
+  background-size: 405px 220px;
+  height: 220px;
 }
+
 /* CANVAS */
-.screenLeftCanvas {
+.screenLeftCanvas, .screenRightCanvas {
   width: 350px;
-  height: 240px;
+  height: 340px;
 }
 .screenRightCanvas {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
-  
-  background-color: #2d2b2c;
-  width: 190px;
-  height: 190px;
+  /* width: 175px; */
+  height: 160px;
 }
 .screenRightInfo {
   display: flex;
@@ -98,22 +110,53 @@
   
   padding-left: 10px;
   background-color: #5c5a5b;
-  width: 130px;
-  height: 190px;
+  width: 175px;
+  height: 160px;
 }
+
+/* ARTWORK BUTTONS */
+.artworkPanel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 405px;
+  height: 40px;
+}
+.artworkButtonDefault, .artworkButtonShiny {
+  cursor: pointer;
+  border: 4px solid #2d2b2c;
+  background-color: #11709e;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  color: rgb(230, 230, 230);
+  font-family: "Courier New", Courier, monospace;
+  width: 60px;
+  height: 16px;
+}
+.artworkButtonShiny {
+  background-color: #dc1830;
+}
+.artworkButtonDefault:hover {
+  background-color: #0c4e6e;
+}
+.artworkButtonShiny:hover {
+  background-color: #c2133a;
+}
+
 /* SEARCH BAR */
 .searchBar {
   border: 5px solid #3a2125;
   background-color: #11709e;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.4);
   color: white;
   font-family: "Courier New", Courier, monospace;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: bold;
   padding-left: 10px;
   align-items: center;
-  margin-top: 10px;
-  width: 320px;
-  height: 30px;
+  width: 380px;
+  height: 40px;
 }
 .searchBar:focus {
   background-color: #1385be;
@@ -130,9 +173,9 @@
 .infoBar {
   border: 4px solid #2d2b2c;
   background-color: #4fa95f;
-  box-shadow: 0px 3px 3px rgba(100, 15, 30, 1), inset 0 0 10px rgba(0, 0, 0, 0.6);
-  width: 405px;
-  height: 150px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.6);
+  width: 400px;
+  height: 190px;
   margin-top: 8px;
   padding-left: 10px;
   padding-top: 5px;
@@ -141,7 +184,7 @@
   font-size: 18px;
   border-radius: 10px;
   overflow: auto;
-  max-height: 150px;
+  max-height: 190px;
 }
 .infoBar::-webkit-scrollbar {
   width: 10px;
@@ -154,19 +197,11 @@
   background-color: rgba(255, 255, 255, 0);
 }
 /* OTHERS */
-.screenRightBlueButtons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 12px;
-  width: 405px;
-  height: 200px;
-}
 .bottomRow {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 405px;
-  height: 19px;
-  margin-top: 8px;
+  height: 15px;
+  opacity: 0.3;
 }

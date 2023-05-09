@@ -10,7 +10,7 @@ const getPokemonList = async () => {
     return results;
   }
   catch(error){
-    console.error("listPokemon: " + error);
+    console.error("getPokemonList: " + error);
     return [];
   }
 };
@@ -29,12 +29,19 @@ const getPokemonData = async (name) => {
       en_description = entry.flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ');
     })
 
+    let en_legend = ""
+    description.genera.map((legend) => {
+      if (legend.language.name === "en")
+      en_legend = legend.genus;
+    })
+
     const result = ({
       name: info.name,
       height: info.height,
       weight: info.weight,
       types: info.types,
       sprites: info.sprites,
+      legend: en_legend,
       description: en_description,
       generation: description.generation.name.toUpperCase()
     })
@@ -42,7 +49,7 @@ const getPokemonData = async (name) => {
     return result;
   }
   catch(error) {
-    console.error("getPokemonInfoByName: " + error);
+    console.error("getPokemonData: " + error);
     return "";
   }
 };

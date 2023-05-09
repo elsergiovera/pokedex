@@ -11,13 +11,17 @@ const Pokedex = () => {
   const [pkmnList, setPkmnList] = useState([]);
   const [selPkmn, setSelPkmn] = useState("");
   const [pkmnData, setPkmnData] = useState("");
-  const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
 
+  // sprites
+  const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
   const [srcFrontSprite, setSrcFrontSprite] = useState("");
   const [srcBackSprite, setSrcBackSprite] = useState("");
-  // const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
+  const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
+  const [srcBackSpriteShiny, setSrcBackSpriteShiny] = useState("");
+  const spriteRef = useRef();
+  
 
-  // functions
+  // components
   const ArtworkScene = () => {
     if(srcFrontArtwork == "")
       return (
@@ -34,24 +38,26 @@ const Pokedex = () => {
     }
   };
   const SpritesScene = () => {
-    if(srcFrontSprite == "" ||
-    srcBackSprite == "")
-      return (
-        <></>
-      )
-    else {
+    
+    useFrame(({clock}) => {
+      if(spriteRef.current != undefined)
+        spriteRef.current.rotation.y = clock.getElapsedTime() * 2
+    });
+
+    if(srcFrontSprite != "" ||
+    srcBackSprite != "") {
       return (
         <>
           <directionalLight position={[0, 0, 5]} />
-          <mesh position={[0, 0, 0]}>
-            <planeGeometry args={[1.2, 1.2, 1, 1]}  />
-            <meshStandardMaterial map={useLoader(TextureLoader, srcFrontSprite)} transparent={true} />
-          </mesh>
-
-          <directionalLight position={[0, 0, -5]} />
-          <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
-            <planeGeometry args={[1.2, 1.2, 1, 1]} />
-            <meshStandardMaterial map={useLoader(TextureLoader, srcBackSprite)} transparent={true} />
+          <mesh ref={spriteRef} position={[0, 0, 0]} >
+            <mesh position={[0, 0, 0]}>
+              <planeGeometry args={[1.5, 1.5, 1, 1]} />
+              <meshBasicMaterial map={useLoader(TextureLoader, srcFrontSprite)} transparent={true} />
+            </mesh>
+            <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
+              <planeGeometry args={[1.5, 1.5, 1, 1]}  />
+              <meshBasicMaterial map={useLoader(TextureLoader, srcBackSprite)} transparent={true} />
+            </mesh>
           </mesh>
         </>
       );
@@ -114,21 +120,6 @@ const Pokedex = () => {
     }
     getPkmnList();
   }, []);
-  // Pokémon list hook.
-  useEffect(() => {
-    const getPkmnInfo = async () => {
-      if (selPkmn != "") {
-        const result = await getPokemonData(selPkmn);       
-        setPkmnData(result);
-      }
-      else {
-        setSelPkmn("");
-        setPkmnData("");
-      }
-
-    }
-    getPkmnInfo();
-  }, [selPkmn]);
   // selected Pokémon hook.
   useEffect(() => {
     if (pkmnData !== "") {
@@ -154,7 +145,7 @@ const Pokedex = () => {
           <div className={styles.screenLeft}>
             <div className={styles.screenLeftCanvas}>
               <Canvas
-                style={{ border: "10px solid #2d2b2c", backgroundColor: "#11709e" }}
+                style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
                 shadows="soft"
                 camera={{
                   fov: 75,
@@ -176,6 +167,8 @@ const Pokedex = () => {
                 />
               </Canvas>
             </div>
+          </div>
+          <div className={styles.panelLeft}>
             <input
               type={"search"}
               id={"searchBar"}
@@ -185,8 +178,9 @@ const Pokedex = () => {
               autoComplete="off"
               list={"PkmnList"} />
           </div>
-          <div className={styles.infoBar} ><PokemonInfo /></div>
-          <div className={styles.bottomRow} />
+          <div className={styles.bottomRow}>
+            <Image src="/bottom_buttons_2.png" width={100} height={15} alt="" />
+          </div>
         </div>
         {/* Center Fold */}
         <div className={styles.centerFold} />
@@ -196,7 +190,7 @@ const Pokedex = () => {
           <div className={styles.screenRight}>
             <div className={styles.screenRightCanvas}>
               <Canvas
-                  style={{ border: "10px solid #2d2b2c", backgroundColor: "#2d2b2c" }}
+                  style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
                   shadows="soft"
                   camera={{
                     fov: 75,
@@ -206,28 +200,23 @@ const Pokedex = () => {
                   }}
                 >
                   <SpritesScene />
-                  <OrbitControls
-                  enableDamping={false}
-                  enableRotate={true}
-                  enableZoom={false}
-                  rotateSpeed={0.5}
-                  minPolarAngle={Math.PI / 2}
-                  maxPolarAngle={Math.PI - Math.PI / 2}
-                />
                 </Canvas>
             </div>
-            <div className={styles.screenRightInfo}>
+            {/* <div className={styles.screenRightInfo}>
               Generation: <br />
               Height: <br />
               Weight: <br />
+            </div> */}
+            <div className={styles.artworkPanel}>
+              <button className={styles.artworkButtonDefault}></button>&nbsp;
+              <button className={styles.artworkButtonShiny}></button>
             </div>
           </div>
-          <div className={styles.screenRightBlueButtons} >
-            <Image src="/blue_buttons_2.png" width={300} height={112} alt="" />
-            {/* <div className={styles.infoBar} ><PokemonInfo /></div> */}
+          <div className={styles.panelRight} >
+            <div className={styles.infoBar} ><PokemonInfo /></div>
           </div>
           <div className={styles.bottomRow}>
-            <Image src="/bottom_buttons_2.png" width={150} height={19} alt="" />
+            <Image src="/bottom_buttons_1.png" width={100} height={15} alt="" />
           </div>
         </div>
       </div>
