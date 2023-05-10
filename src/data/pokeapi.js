@@ -37,13 +37,13 @@ const getPokemonData = async (name) => {
 
     const result = ({
       name: info.name,
-      height: info.height,
-      weight: info.weight,
+      height: `${info.height * 10} cms.`,
+      weight: `${info.weight / 10} kgs.`,
       types: info.types,
       sprites: info.sprites,
       legend: en_legend,
       description: en_description,
-      generation: description.generation.name.toUpperCase()
+      generation: description.generation.name.toUpperCase().replaceAll('-', ' ')
     })
     
     return result;

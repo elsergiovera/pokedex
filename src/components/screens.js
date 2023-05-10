@@ -1,6 +1,6 @@
 import React from "react";
 import { TextureLoader } from "three";
-import { useLoader, useFrame } from "@react-three/fiber";
+import { useLoader, useFrame  } from "@react-three/fiber";
 
 const BigScreen = (props) => {
   return props.frontArtwork ? (
@@ -14,26 +14,24 @@ const BigScreen = (props) => {
     ) : null;
 };
 
-const SmallScreen = (props) => {
-    
+const SmallScreen = (props) => {   
   useFrame(({clock}) => {
     if(props.spriteRef.current != undefined)
       props.spriteRef.current.rotation.y = clock.getElapsedTime() * 2
   });
 
-  if(props.frontSprite != "" ||
-  props.backSprite != "") {
+  if(props.pkmnData.sprites != undefined) {
     return (
       <>
         <directionalLight position={[0, 0, 5]} />
-        <mesh ref={props.spriteRef} position={[0, 0, 0]} >
+        <mesh ref={props.spriteRef} position={[0, 0, 0]}>
           <mesh position={[0, 0, 0]}>
             <planeGeometry args={[1.5, 1.5, 1, 1]} />
-            <meshBasicMaterial map={useLoader(TextureLoader, props.frontSprite)} transparent={true} />
+            <meshBasicMaterial map={useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.front_shiny : props.pkmnData.sprites.front_default)} transparent={true} />
           </mesh>
           <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
-            <planeGeometry args={[1.5, 1.5, 1, 1]}  />
-            <meshBasicMaterial map={useLoader(TextureLoader, props.backSprite)} transparent={true} />
+            <planeGeometry args={[1.5, 1.5, 1, 1]} />
+            <meshBasicMaterial map={useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.back_shiny : props.pkmnData.sprites.back_default)} transparent={true} />
           </mesh>
         </mesh>
       </>

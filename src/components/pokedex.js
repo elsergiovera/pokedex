@@ -11,13 +11,10 @@ const Pokedex = () => {
   // variables.
   const [pkmnList, setPkmnList] = useState([]);
   const [pkmnData, setPkmnData] = useState("");
+  const [isShiny , setIsShiny] = useState(false);
 
   // sprites
   const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
-  const [srcFrontSprite, setSrcFrontSprite] = useState("");
-  const [srcBackSprite, setSrcBackSprite] = useState("");
-  const [srcFrontSpriteShiny, setSrcFrontSpriteShiny] = useState("");
-  const [srcBackSpriteShiny, setSrcBackSpriteShiny] = useState("");
   const spriteRef = useRef();
   
   const PokemonInfo = () => {
@@ -29,8 +26,8 @@ const Pokedex = () => {
         info = info + item.type.name.charAt(0).toUpperCase() + item.type.name.slice(1) + (pkmnData.types.length-1 === index ? ".<br>" : ", ")
       ))
       info = info +
-      "<strong>Height:</strong> " + pkmnData.height * 10 + " cms.<br>" +
-      "<strong>Weight:</strong> " + pkmnData.weight / 10 + " kgs.<br>" +
+      "<strong>Height:</strong> " + pkmnData.height + "<br>" +
+      "<strong>Weight:</strong> " + pkmnData.weight + "<br>" +
       "<strong>Description:</strong> " + pkmnData.description + "<br>" +
       "<strong>Avaliable Since:</strong> " + pkmnData.generation;
     }
@@ -79,13 +76,13 @@ const Pokedex = () => {
   useEffect(() => {
     if (pkmnData !== "") {
       setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default);
-      setSrcFrontSprite(pkmnData.sprites.front_default);
-      setSrcBackSprite(pkmnData.sprites.back_default);
+      // setSrcFrontSprite(pkmnData.sprites.front_default);
+      // setSrcBackSprite(pkmnData.sprites.back_default);
     }
     else {
       setSrcFrontArtwork("");
-      setSrcFrontSprite("");
-      setSrcBackSprite("");
+      // setSrcFrontSprite("");
+      // setSrcBackSprite("");
     }
     PokemonInfo();
 
@@ -97,10 +94,10 @@ const Pokedex = () => {
         {/* Left Side */}
         <div className={styles.leftSide} >
           <div className={styles.topScreenLeft} />
-          <div className={styles.screenLeft}>
+          <div className={styles.bigScreen}>
             <div className={styles.bigScreenCanvas}>
               <Canvas
-                style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
+                style={{ border: "6px solid #320309", backgroundColor: "#2d2b2c" }}
                 shadows="soft"
                 camera={{
                   fov: 75,
@@ -142,10 +139,11 @@ const Pokedex = () => {
         {/* Right Side */}
         <div className={styles.rightSide} >
           <div className={styles.topScreenRight} />
-          <div className={styles.screenRight}>
+          <div className={styles.smallScreen}>
             <div className={styles.smallScreenCanvas}>
               <Canvas
-                  style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
+                  // style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
+                  style={{ backgroundColor: "#2d2b2c" }}
                   shadows="soft"
                   camera={{
                     fov: 75,
@@ -154,20 +152,24 @@ const Pokedex = () => {
                     position: [0, 0, 1]
                   }}
                 >
-                  <SmallScreen spriteRef={spriteRef} frontSprite={srcFrontSprite} backSprite={srcBackSprite} />
+                  <SmallScreen spriteRef={spriteRef} pkmnData={pkmnData} isShiny={isShiny} />
                 </Canvas>
             </div>
-            {/* <div className={styles.screenRightInfo}>
-              Generation: <br />
-              Height: <br />
-              Weight: <br />
-            </div> */}
-            <div className={styles.artworkPanel}>
-              <button className={styles.artworkButtonDefault}></button>&nbsp;
-              <button className={styles.artworkButtonShiny}></button>
+            <div className={styles.screenRightInfo}>
+              {/* ({if(pkmnData == null) {}}) */}
+
+              {pkmnData.legend}<br/>
+              {pkmnData.generation}<br />
+              Height: {pkmnData.height}<br />
+              Weight: {pkmnData.weight}<br />
             </div>
           </div>
           <div className={styles.panelRight} >
+            <div className={styles.artworkPanel}>
+              <button className={styles.artworkButtonDefault} onClick={() => {setIsShiny(false)}}>normal</button>&nbsp;
+              <button className={styles.artworkButtonShiny} onClick={() => {setIsShiny(true)}}>shiny</button>
+            </div>
+
             <div className={styles.infoBar} ><PokemonInfo /></div>
           </div>
           <div className={styles.bottomRow}>
