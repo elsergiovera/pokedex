@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from 'next/image'
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from '@react-three/drei';
 import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
 
@@ -112,16 +111,6 @@ const Pokedex = () => {
                 }}
               >
                 <BigScreen pkmnData={pkmnData} isShiny={isShiny} />
-                <OrbitControls
-                  enableDamping={false}
-                  enableRotate={true}
-                  enableZoom={false}
-                  rotateSpeed={0.5}
-                  minAzimuthAngle={-Math.PI / 20}
-                  maxAzimuthAngle={Math.PI / 20}
-                  minPolarAngle={Math.PI / 2 - 0.1}
-                  maxPolarAngle={Math.PI / 2 + 0.1}
-                />
               </Canvas>
             </div>
           </div>
