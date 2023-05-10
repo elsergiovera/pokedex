@@ -8,39 +8,25 @@ import styles from "@/styles/Pokedex.module.css";
 import { BigScreen, SmallScreen } from "./screens"
 
 const Pokedex = () => {
-  // variables.
+  // States.
   const [pkmnList, setPkmnList] = useState([]);
   const [pkmnData, setPkmnData] = useState("");
   const [isShiny , setIsShiny] = useState(false);
-
-  // sprites
-  const [srcFrontArtwork, setSrcFrontArtwork] = useState("");
   const spriteRef = useRef();
   
-  const PokemonInfo = () => {
-    let info = "";
+  // Pokémon list load.
+  useEffect(() => {
+    const getPkmnList = async () => {
+      const resp = await getPokemonList();
 
-    if(pkmnData != "") {
-      info = (pkmnData.types.length > 1 ? "<strong>Types:</strong> " : "<strong>Type:</strong> ")
-      pkmnData.types.map((item, index) => (
-        info = info + item.type.name.charAt(0).toUpperCase() + item.type.name.slice(1) + (pkmnData.types.length-1 === index ? ".<br>" : ", ")
-      ))
-      info = info +
-      "<strong>Height:</strong> " + pkmnData.height + "<br>" +
-      "<strong>Weight:</strong> " + pkmnData.weight + "<br>" +
-      "<strong>Description:</strong> " + pkmnData.description + "<br>" +
-      "<strong>Avaliable Since:</strong> " + pkmnData.generation;
+      if(resp.length > 0) {
+        setPkmnList(resp);
+      }
     }
-    else {
-      info = "";
-    }
+    getPkmnList();
+  }, []);
 
-    return (
-      <div dangerouslySetInnerHTML={{ __html: info }} />
-    );
-  };
-
-  // handler for Search Bar.
+  // Search bar hanlder.
   const handlerOnChangeSearchBar = (event) => {
     const search = event.target.value.toLowerCase();
 
@@ -61,32 +47,51 @@ const Pokedex = () => {
     }
   };
 
-  // first Load hook.
-  useEffect(() => {
-    const getPkmnList = async () => {
-      const resp = await getPokemonList();
+  // Small screen component.
+  const SmallScreenInfo = () => {
+    return (
+      <div>
+        {pkmnData == "" ?
+          ( <></> ) :
+          (
+            <>
+              {
+                pkmnData.types.length > 1 ?
+                "Types: " :
+                "Type: "
+              }
+              {
+                pkmnData.types.map((type, index) => (
+                  type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1) + (pkmnData.types.length-1 === index ? "." : ", ")
+                ))
+              }<br />
+              Height: {pkmnData.height}<br />
+              Weight: {pkmnData.weight}<br />
+            </>
+          )
+        }
+      </div>
+    )
+  };
 
-      if(resp.length > 0) {
-        setPkmnList(resp);
-      }
-    }
-    getPkmnList();
-  }, []);
-  // selected Pokémon hook.
-  useEffect(() => {
-    if (pkmnData !== "") {
-      setSrcFrontArtwork(pkmnData.sprites.other["official-artwork"].front_default);
-      // setSrcFrontSprite(pkmnData.sprites.front_default);
-      // setSrcBackSprite(pkmnData.sprites.back_default);
-    }
-    else {
-      setSrcFrontArtwork("");
-      // setSrcFrontSprite("");
-      // setSrcBackSprite("");
-    }
-    PokemonInfo();
-
-  }, [pkmnData]);
+  // Green screen component.
+  const GreenScreenInfo = () => {
+    return (
+      <div>
+        {pkmnData == "" ?
+          ( <></> ) :
+          (
+            <>
+              <h4><center>{pkmnData.legend}</center></h4>
+              <h5><center>{pkmnData.generation}</center></h5>
+              <br/>
+              {pkmnData.description}<br />
+            </>
+          )
+        }
+      </div>
+    )
+  };
 
   return (
     <div className={styles.pokedex}>
@@ -97,7 +102,7 @@ const Pokedex = () => {
           <div className={styles.bigScreen}>
             <div className={styles.bigScreenCanvas}>
               <Canvas
-                style={{ border: "6px solid #320309", backgroundColor: "#2d2b2c" }}
+                style={{ backgroundColor: "#2d2b2c" }}
                 shadows="soft"
                 camera={{
                   fov: 75,
@@ -106,7 +111,7 @@ const Pokedex = () => {
                   position: [0, 0, 1]
                 }}
               >
-                <BigScreen frontArtwork={srcFrontArtwork}  />
+                <BigScreen pkmnData={pkmnData} isShiny={isShiny} />
                 <OrbitControls
                   enableDamping={false}
                   enableRotate={true}
@@ -131,7 +136,7 @@ const Pokedex = () => {
               list={"PkmnList"} />
           </div>
           <div className={styles.bottomRow}>
-            <Image src="/bottom_buttons_2.png" width={100} height={15} alt="" />
+            <Image src="/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
         {/* Center Fold */}
@@ -142,7 +147,6 @@ const Pokedex = () => {
           <div className={styles.smallScreen}>
             <div className={styles.smallScreenCanvas}>
               <Canvas
-                  // style={{ border: "8px solid #320309", backgroundColor: "#2d2b2c" }}
                   style={{ backgroundColor: "#2d2b2c" }}
                   shadows="soft"
                   camera={{
@@ -156,24 +160,18 @@ const Pokedex = () => {
                 </Canvas>
             </div>
             <div className={styles.screenRightInfo}>
-              {/* ({if(pkmnData == null) {}}) */}
-
-              {pkmnData.legend}<br/>
-              {pkmnData.generation}<br />
-              Height: {pkmnData.height}<br />
-              Weight: {pkmnData.weight}<br />
+              <SmallScreenInfo />
             </div>
           </div>
           <div className={styles.panelRight} >
             <div className={styles.artworkPanel}>
-              <button className={styles.artworkButtonDefault} onClick={() => {setIsShiny(false)}}>normal</button>&nbsp;
+              <button className={styles.artworkButtonNormal} onClick={() => {setIsShiny(false)}}>normal</button>&nbsp;
               <button className={styles.artworkButtonShiny} onClick={() => {setIsShiny(true)}}>shiny</button>
             </div>
-
-            <div className={styles.infoBar} ><PokemonInfo /></div>
+            <div className={styles.greenScreen}><GreenScreenInfo /></div>
           </div>
           <div className={styles.bottomRow}>
-            <Image src="/bottom_buttons_1.png" width={100} height={15} alt="" />
+            <Image src="/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
       </div>
