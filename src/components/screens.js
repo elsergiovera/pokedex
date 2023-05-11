@@ -1,6 +1,5 @@
-import React, { useRef } from "react";
+import React from "react";
 import { TextureLoader } from "three";
-import * as THREE from 'three';
 import { useLoader, useFrame, useThree  } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 
@@ -15,20 +14,20 @@ const BigScreen = (props) => {
       <OrbitControls
           enableDamping={false}
           enableRotate={true}
-          enablePan={false}
           enableZoom={true}
+          enablePan={false}
           minDistance={0.3}
           maxDistance={1}
           rotateSpeed={0.5}
           zoomSpeed={2}
-          // minAzimuthAngle={0}
-          // maxAzimuthAngle={0}
-          // minPolarAngle={Math.PI / 2}
-          // maxPolarAngle={-Math.PI - Math.PI / 2}
           minAzimuthAngle={-Math.PI / 20}
           maxAzimuthAngle={Math.PI / 20}
           minPolarAngle={Math.PI / 2 - 0.1}
           maxPolarAngle={Math.PI / 2 + 0.1}
+          // minAzimuthAngle={0}
+          // maxAzimuthAngle={0}
+          // minPolarAngle={Math.PI / 2}
+          // maxPolarAngle={-Math.PI - Math.PI / 2}
         />
     </>
     ) : null;
