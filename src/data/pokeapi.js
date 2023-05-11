@@ -23,7 +23,7 @@ const getPokemonData = async (name) => {
     const response2 = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${name}`);
     const description = await response2.json();
 
-    let en_description = "";
+    let en_description = "NO DATA";
     description.flavor_text_entries.map((entry) => {
       if (entry.language.name === "en")
       en_description = entry.flavor_text.replaceAll('\n', ' ').replaceAll('\f', ' ');

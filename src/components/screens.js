@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { TextureLoader } from "three";
-import { useLoader, useFrame, useThree  } from "@react-three/fiber";
+import { useLoader, useFrame } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 
 const BigScreen = (props) => {
@@ -20,20 +20,29 @@ const BigScreen = (props) => {
           maxDistance={1}
           rotateSpeed={0.5}
           zoomSpeed={2}
-          minAzimuthAngle={-Math.PI / 20}
-          maxAzimuthAngle={Math.PI / 20}
-          minPolarAngle={Math.PI / 2 - 0.1}
-          maxPolarAngle={Math.PI / 2 + 0.1}
-          // minAzimuthAngle={0}
-          // maxAzimuthAngle={0}
-          // minPolarAngle={Math.PI / 2}
-          // maxPolarAngle={-Math.PI - Math.PI / 2}
+          minAzimuthAngle={-Math.PI / 5}
+          maxAzimuthAngle={Math.PI / 5}
+          minPolarAngle={Math.PI / 2 - 0.3}
+          maxPolarAngle={Math.PI / 2 + 0.3}
         />
     </>
-    ) : null;
+  ) : null;
 };
 
-const SmallScreen = (props) => {   
+const SmallScreen = (props) => {
+  const spriteNull = "/null_sprite.png";
+
+  let [spriteFront, spriteBack] = (() => {
+    if (props.pkmnData != "") {
+      if (props.isShiny)
+        return [props.pkmnData.sprites.front_shiny, props.pkmnData.sprites.back_shiny];
+      else
+        return [props.pkmnData.sprites.front_default, props.pkmnData.sprites.back_default];
+    }
+    else
+      return [null, null];
+  })();
+
   useFrame(({clock}) => {
     if(props.spriteRef.current != undefined)
       props.spriteRef.current.rotation.y = clock.getElapsedTime() * 2
@@ -45,11 +54,21 @@ const SmallScreen = (props) => {
       <mesh ref={props.spriteRef} position={[0, 0, 0]}>
         <mesh position={[0, 0, 0]}>
           <planeGeometry args={[1.2, 1.5, 1, 1]} />
-          <meshBasicMaterial map={useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.front_shiny : props.pkmnData.sprites.front_default)} transparent={true} />
+          {
+            <meshBasicMaterial
+              map={useLoader(TextureLoader, (spriteFront ? spriteFront : spriteNull))}
+              opacity={spriteFront ? 1 : 0.25}
+              transparent={true} />
+          }
         </mesh>
         <mesh position={[0, 0, 0]} rotation={[0, Math.PI, 0]}>
           <planeGeometry args={[1.2, 1.5, 1, 1]} />
-          <meshBasicMaterial map={useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.back_shiny : props.pkmnData.sprites.back_default)} transparent={true} />
+          {
+            <meshBasicMaterial
+              map={useLoader(TextureLoader, (spriteBack ? spriteBack : spriteNull))}
+              opacity={spriteBack ? 1 : 0.25}
+              transparent={true} />
+          }
         </mesh>
       </mesh>
     </>

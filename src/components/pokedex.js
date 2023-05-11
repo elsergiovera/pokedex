@@ -25,7 +25,7 @@ const Pokedex = () => {
     getPkmnList();
   }, []);
 
-  // Search bar hanlder.
+  // Search bar handler.
   const handlerOnChangeSearchBar = (event) => {
     const search = event.target.value.toLowerCase();
 
@@ -84,7 +84,6 @@ const Pokedex = () => {
           (
             <>
               <h3><center>{pkmnData.legend}</center></h3>
-              {/* <h5><center>{pkmnData.generation}</center></h5> */}
               <br/>
               {pkmnData.description}<br />
             </>
@@ -138,17 +137,17 @@ const Pokedex = () => {
           <div className={styles.smallScreen}>
             <div className={styles.smallScreenCanvas}>
               <Canvas
-                  style={{ backgroundColor: "#2d2b2c" }}
-                  shadows="soft"
-                  camera={{
-                    fov: 75,
-                    near: 0.1,
-                    far: 1000,
-                    position: [0, 0, 1]
-                  }}
-                >
-                  <SmallScreen spriteRef={spriteRef} pkmnData={pkmnData} isShiny={isShiny} />
-                </Canvas>
+                style={{ backgroundColor: "#2d2b2c" }}
+                shadows="soft"
+                camera={{
+                  fov: 75,
+                  near: 0.1,
+                  far: 1000,
+                  position: [0, 0, 1]
+                }}
+              >
+                <SmallScreen spriteRef={spriteRef} pkmnData={pkmnData} isShiny={isShiny} />
+              </Canvas>
             </div>
             <div className={styles.screenRightInfo}>
               <SmallScreenInfo />
