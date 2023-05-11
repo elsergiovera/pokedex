@@ -37,6 +37,7 @@ const getPokemonData = async (name) => {
 
     const result = ({
       name: info.name,
+      id: info.id,
       height: `${info.height * 10} cms.`,
       weight: `${info.weight / 10} kgs.`,
       types: info.types,

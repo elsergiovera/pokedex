@@ -54,6 +54,8 @@ const Pokedex = () => {
           ( <></> ) :
           (
             <>
+              <h3>#{pkmnData.id}</h3>
+              <h4>{pkmnData.generation}</h4><br />
               {
                 pkmnData.types.length > 1 ?
                 "Types: " :
@@ -81,8 +83,8 @@ const Pokedex = () => {
           ( <></> ) :
           (
             <>
-              <h4><center>{pkmnData.legend}</center></h4>
-              <h5><center>{pkmnData.generation}</center></h5>
+              <h3><center>{pkmnData.legend}</center></h3>
+              {/* <h5><center>{pkmnData.generation}</center></h5> */}
               <br/>
               {pkmnData.description}<br />
             </>
