@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { TextureLoader } from "three";
 import { useLoader, useFrame } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
