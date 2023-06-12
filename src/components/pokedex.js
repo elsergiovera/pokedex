@@ -5,8 +5,6 @@ import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
 import { BigScreen, SmallScreen } from "./screens"
 
-// TEST
-
 const Pokedex = () => {
   // States.
   const [pkmnList, setPkmnList] = useState([]);
