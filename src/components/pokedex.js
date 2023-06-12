@@ -3,8 +3,9 @@ import Image from 'next/image'
 import { Canvas } from "@react-three/fiber";
 import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
-
 import { BigScreen, SmallScreen } from "./screens"
+
+// TEST
 
 const Pokedex = () => {
   // States.

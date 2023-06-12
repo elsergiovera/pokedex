@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useRef } from "react";
 import { TextureLoader } from "three";
 import { useLoader, useFrame, useThree  } from "@react-three/fiber";
 import { OrbitControls } from '@react-three/drei';
 
 const BigScreen = (props) => {
+  const controlsRef = useRef();
+  const { camera, gl } = useThree();
+
   return props.pkmnData != "" ? (
     <>
       <mesh>
@@ -28,12 +31,14 @@ const BigScreen = (props) => {
           // maxAzimuthAngle={0}
           // minPolarAngle={Math.PI / 2}
           // maxPolarAngle={-Math.PI - Math.PI / 2}
+
+          ref={controlsRef} args={[camera, gl.domElement]}
         />
     </>
     ) : null;
 };
 
-const SmallScreen = (props) => {   
+const SmallScreen = (props) => {
   useFrame(({clock}) => {
     if(props.spriteRef.current != undefined)
       props.spriteRef.current.rotation.y = clock.getElapsedTime() * 2
