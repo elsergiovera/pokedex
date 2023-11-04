@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Pokedex from '../components/pokedex.js'
 
-// TEST!!!
-
 export default function Home() {
   return (
     <>
