@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['elsergiovera.github.io/pokedex/public']
+    domains: ['elsergiovera.github.io/pokedex']
   }
 }
 
