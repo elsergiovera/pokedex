@@ -124,7 +124,7 @@ const Pokedex = () => {
               list={"PkmnList"} />
           </div>
           <div className={styles.bottomRow}>
-            <Image src="/bottom.png" width={150} height={15} alt="" />
+            <Image src="/pokedex/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
         {/* Center Fold */}
@@ -159,7 +159,7 @@ const Pokedex = () => {
             <div className={styles.greenScreen}><GreenScreenInfo /></div>
           </div>
           <div className={styles.bottomRow}>
-            <Image src="/bottom.png" width={150} height={15} alt="" />
+            <Image src="/pokedex/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
       </div>

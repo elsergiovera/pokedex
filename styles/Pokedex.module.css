@@ -23,7 +23,7 @@
 /* CENTER FOLD */
 .centerFold {
   display: inline-block;
-  background-image: url('/fold.png');
+  background-image: url('/pokedex/fold.png');
   background-repeat: no-repeat;
   width: 25px;
   height: 607px;
