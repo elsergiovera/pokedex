@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { Canvas } from "@react-three/fiber";
 import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
-import { BigScreen, SmallScreen } from "./screens"
+import { Screen} from "./screens"
 
 const Pokedex = () => {
   // States.
@@ -109,7 +109,7 @@ const Pokedex = () => {
                   position: [0, 0, 1]
                 }}
               >
-                <BigScreen pkmnData={pkmnData} isShiny={isShiny} />
+                <Screen pkmnData={pkmnData} isShiny={isShiny} isMain={true} spriteRef={spriteRef} />
               </Canvas>
             </div>
           </div>
@@ -144,7 +144,7 @@ const Pokedex = () => {
                     position: [0, 0, 1]
                   }}
                 >
-                  <SmallScreen spriteRef={spriteRef} pkmnData={pkmnData} isShiny={isShiny} />
+                  <Screen pkmnData={pkmnData} isShiny={isShiny} spriteRef={spriteRef} />
                 </Canvas>
             </div>
             <div className={styles.screenRightInfo}>
