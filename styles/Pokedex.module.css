@@ -23,7 +23,7 @@
 /* CENTER FOLD */
 .centerFold {
   display: inline-block;
-  background-image: url('../public/fold.png');
+  background-image: url('/fold.png');
   background-repeat: no-repeat;
   width: 25px;
   height: 607px;
@@ -60,7 +60,7 @@
   background-size: 405px 130px;
 }
 .topScreenRight {
-  background-image: url('../public/top_screen_right.png');
+  background-image: url('/top_screen_right.png');
 }
 
 /* SCREENS */
@@ -72,7 +72,7 @@
   margin-top: -1px;
   width: 405px;
   height: 380px;
-  background-image: url('../public/big_screen.png');
+  background-image: url('/big_screen.png');
   background-repeat: no-repeat;
   background-size: 405px 380px;
 }
@@ -81,7 +81,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-image: url('../public/small_screen.png');
+  background-image: url('/small_screen.png');
   background-size: 405px 200px;
   height: 200px;
 }
