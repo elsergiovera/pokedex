@@ -53,7 +53,7 @@
 
  /* TOP SCREENS */
 .topScreenLeft, .topScreenRight {
-  background-image: url('/top_screen_left.png');
+  background-image: url('/pokedex/top_screen_left.png');
   background-repeat: no-repeat;
   width: 405px;
   height: 120px;
