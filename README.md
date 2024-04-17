@@ -1,6 +1,6 @@
 # MyPoKéDeX
 
-![MyPoKéDeX Screenshot](/public/appss.png)
+![MyPoKéDeX Screenshot](/public/ss.png)
 
 ## :closed_book: Introduction
 
