@@ -12,7 +12,7 @@ Welcome to **MyPoKéDeX**, a simple React application for Pokémon enthusiasts o
 - **Real-time Pokémon Data**: Access comprehensive information about your favorite Pokémon, sourced from the public [PokéAPI](https://pokeapi.co).
 
 ## :red_circle: Demo
-You can find a live demo here: **[elsergiovera.github.io/pokedex](https://elsergiovera.github.io/pokedex)**
+You can find a live demo here: **[pokedex.veraserg.io](https://pokedex.veraserg.io)**
 
 <br>
 <br>
