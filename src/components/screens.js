@@ -9,7 +9,7 @@ const Screen = (props) => {
     ? (
         props.isMain
         ? <BigScreen pkmnData={props.pkmnData} isShiny={props.isShiny} />
-        : <SmallScreen pkmnData={props.pkmnData} isShiny={props.isShiny} spriteRef={props.spriteRef} />
+        : <SmallScreen pkmnData={props.pkmnData} isShiny={props.isShiny} />
       )
     : null
 }
@@ -22,7 +22,8 @@ const BigScreen = (props) => {
   return (
     <>
       <mesh>
-        <directionalLight position={[0, 0, 5]} />
+        {/* three r155+ dropped legacy light scaling; π restores the original brightness. */}
+        <directionalLight position={[0, 0, 5]} intensity={Math.PI} />
         <planeGeometry args={[1.4, 1.4, 2, 2]} />
         <meshStandardMaterial map={map} transparent={true} />
       </mesh>
@@ -46,18 +47,19 @@ const BigScreen = (props) => {
 };
 
 const SmallScreen = (props) => {
+  const spriteRef = useRef();
   const mapFront = useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.front_shiny : props.pkmnData.sprites.front_default);
   const mapBack = useLoader(TextureLoader, props.isShiny ? props.pkmnData.sprites.back_shiny : props.pkmnData.sprites.back_default);
 
   useFrame(({clock}) => {
-    if(props.spriteRef.current != undefined)
-      props.spriteRef.current.rotation.y = clock.getElapsedTime() * 2
+    if(spriteRef.current != undefined)
+      spriteRef.current.rotation.y = clock.getElapsedTime() * 2
   });
 
   return (
     <>
       <directionalLight position={[0, 0, 5]} />
-      <mesh ref={props.spriteRef} position={[0, 0, 0]}>
+      <mesh ref={spriteRef} position={[0, 0, 0]}>
         <mesh position={[0, 0, 0]}>
           <planeGeometry args={[1.2, 1.5, 1, 1]} />
           <meshBasicMaterial map={mapFront} transparent={true} />

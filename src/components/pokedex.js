@@ -1,17 +1,62 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from 'next/image'
 import { Canvas } from "@react-three/fiber";
 import { getPokemonList, getPokemonData } from "../data/pokeapi";
 import styles from "@/styles/Pokedex.module.css";
 import { Screen} from "./screens"
 
+// Small screen component.
+const SmallScreenInfo = ({ pkmnData }) => {
+  return (
+    <div>
+      {pkmnData == "" ?
+        ( <></> ) :
+        (
+          <>
+            {
+              pkmnData.types.length > 1 ?
+              "Types: " :
+              "Type: "
+            }
+            {
+              pkmnData.types.map((type, index) => (
+                type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1) + (pkmnData.types.length-1 === index ? "." : ", ")
+              ))
+            }<br />
+            Height: {pkmnData.height}<br />
+            Weight: {pkmnData.weight}<br />
+          </>
+        )
+      }
+    </div>
+  )
+};
+
+// Green screen component.
+const GreenScreenInfo = ({ pkmnData }) => {
+  return (
+    <div>
+      {pkmnData == "" ?
+        ( <></> ) :
+        (
+          <>
+            <h4><center>{pkmnData.legend}</center></h4>
+            <h5><center>{pkmnData.generation}</center></h5>
+            <br/>
+            {pkmnData.description}<br />
+          </>
+        )
+      }
+    </div>
+  )
+};
+
 const Pokedex = () => {
   // States.
   const [pkmnList, setPkmnList] = useState([]);
   const [pkmnData, setPkmnData] = useState("");
   const [isShiny , setIsShiny] = useState(false);
-  const spriteRef = useRef();
-  
+
   // Pokémon list load.
   useEffect(() => {
     const getPkmnList = async () => {
@@ -45,52 +90,6 @@ const Pokedex = () => {
     }
   };
 
-  // Small screen component.
-  const SmallScreenInfo = () => {
-    return (
-      <div>
-        {pkmnData == "" ?
-          ( <></> ) :
-          (
-            <>
-              {
-                pkmnData.types.length > 1 ?
-                "Types: " :
-                "Type: "
-              }
-              {
-                pkmnData.types.map((type, index) => (
-                  type.type.name.charAt(0).toUpperCase() + type.type.name.slice(1) + (pkmnData.types.length-1 === index ? "." : ", ")
-                ))
-              }<br />
-              Height: {pkmnData.height}<br />
-              Weight: {pkmnData.weight}<br />
-            </>
-          )
-        }
-      </div>
-    )
-  };
-
-  // Green screen component.
-  const GreenScreenInfo = () => {
-    return (
-      <div>
-        {pkmnData == "" ?
-          ( <></> ) :
-          (
-            <>
-              <h4><center>{pkmnData.legend}</center></h4>
-              <h5><center>{pkmnData.generation}</center></h5>
-              <br/>
-              {pkmnData.description}<br />
-            </>
-          )
-        }
-      </div>
-    )
-  };
-
   return (
     <div className={styles.pokedex}>
       <div className={styles.innerBorder}>
@@ -109,7 +108,7 @@ const Pokedex = () => {
                   position: [0, 0, 1]
                 }}
               >
-                <Screen pkmnData={pkmnData} isShiny={isShiny} isMain={true} spriteRef={spriteRef} />
+                <Screen pkmnData={pkmnData} isShiny={isShiny} isMain={true} />
               </Canvas>
             </div>
           </div>
@@ -144,11 +143,11 @@ const Pokedex = () => {
                     position: [0, 0, 1]
                   }}
                 >
-                  <Screen pkmnData={pkmnData} isShiny={isShiny} spriteRef={spriteRef} />
+                  <Screen pkmnData={pkmnData} isShiny={isShiny} />
                 </Canvas>
             </div>
             <div className={styles.screenRightInfo}>
-              <SmallScreenInfo />
+              <SmallScreenInfo pkmnData={pkmnData} />
             </div>
           </div>
           <div className={styles.panelRight} >
@@ -156,7 +155,7 @@ const Pokedex = () => {
               <button className={styles.artworkButtonNormal} onClick={() => {setIsShiny(false)}}>normal</button>&nbsp;
               <button className={styles.artworkButtonShiny} onClick={() => {setIsShiny(true)}}>shiny</button>
             </div>
-            <div className={styles.greenScreen}><GreenScreenInfo /></div>
+            <div className={styles.greenScreen}><GreenScreenInfo pkmnData={pkmnData} /></div>
           </div>
           <div className={styles.bottomRow}>
             <Image src="/bottom.png" width={150} height={15} alt="" />

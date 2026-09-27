@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['pokedex.veraserg.io']
+    remotePatterns: [{ protocol: 'https', hostname: 'pokedex.veraserg.io' }]
   }
 }
 
