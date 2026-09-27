@@ -231,7 +231,7 @@
   }
   .centerFold {
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1 / span 3;
     width: 16px;
     height: auto;
     background-size: 100% 100%;
@@ -301,7 +301,14 @@
     max-height: none;
     padding-bottom: 10px;
   }
-  .bottomRow {
+  /* The left bottom bar sits under the search bar; the right one is hidden. */
+  .rightSide .bottomRow {
     display: none;
+  }
+  .leftSide .bottomRow {
+    grid-column: 2;
+    grid-row: 3;
+    width: auto;
+    padding: 0 0 4px 8px;
   }
 }

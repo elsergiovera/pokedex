@@ -122,7 +122,7 @@ const Pokedex = () => {
               autoComplete="off"
               list={"PkmnList"} />
           </div>
-          <div className={`${styles.bottomRow} ${styles.desktopOnly}`}>
+          <div className={styles.bottomRow}>
             <Image src="/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
