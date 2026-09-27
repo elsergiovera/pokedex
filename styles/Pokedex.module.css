@@ -201,3 +201,107 @@
   height: 15px;
   opacity: 0.5;
 }
+/* MOBILE: only the right half, with the fold as the left hinge. */
+@media (max-width: 959px) {
+  .pokedex, .innerBorder {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    height: auto;
+  }
+  .pokedex {
+    width: min(460px, calc(100vw - 16px));
+    margin: 8px auto;
+    padding: 6px;
+  }
+  .innerBorder {
+    display: grid;
+    grid-template-columns: 16px 1fr;
+    width: 100%;
+    padding: 6px;
+    border-width: 3px;
+    border-radius: 8px;
+  }
+  .desktopOnly {
+    display: none;
+  }
+  .leftSide {
+    display: contents;
+  }
+  .centerFold {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    width: 16px;
+    height: auto;
+    background-size: 100% 100%;
+  }
+  .rightSide {
+    grid-column: 2;
+    grid-row: 1;
+    container-type: inline-size;
+    width: auto;
+    height: auto;
+    padding-left: 8px;
+  }
+
+  /* Search bar takes the place of the bottom bar, below the green screen. */
+  .panelLeft {
+    grid-column: 2;
+    grid-row: 2;
+    width: auto;
+    height: auto;
+    padding: 0 0 10px 8px;
+  }
+  .searchBar {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    padding-left: 6px;
+    border-width: 4px;
+  }
+
+  /* Right side scales with its own width (cqw) instead of the fixed 405px. */
+  /* Mobile uses the left header (lens and lights) on top of the right side. */
+  .topScreenRight {
+    background-image: url('/top_screen_left.png');
+    width: 100%;
+    height: 29.63cqw;
+    background-size: 100% 32.1cqw;
+  }
+  .smallScreen {
+    width: 100%;
+    height: 49.38cqw;
+    background-size: 100% 100%;
+  }
+  .smallScreenCanvas {
+    width: 42cqw;
+    height: 39.5cqw;
+  }
+  .screenRightInfo {
+    width: 46cqw;
+    height: 39.5cqw;
+    padding: 0 4px;
+  }
+  .panelRight {
+    width: 100%;
+    height: auto;
+    padding-bottom: 10px;
+  }
+  .artworkPanel {
+    width: 100%;
+  }
+  .artworkButtonNormal, .artworkButtonShiny {
+    width: min(120px, 42cqw);
+  }
+  .greenScreen {
+    width: 100%;
+    height: auto;
+    min-height: 190px;
+    max-height: none;
+    padding-bottom: 10px;
+  }
+  .bottomRow {
+    display: none;
+  }
+}

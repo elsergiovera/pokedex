@@ -95,8 +95,8 @@ const Pokedex = () => {
       <div className={styles.innerBorder}>
         {/* Left Side */}
         <div className={styles.leftSide} >
-          <div className={styles.topScreenLeft} />
-          <div className={styles.bigScreen}>
+          <div className={`${styles.topScreenLeft} ${styles.desktopOnly}`} />
+          <div className={`${styles.bigScreen} ${styles.desktopOnly}`}>
             <div className={styles.bigScreenCanvas}>
               <Canvas
                 style={{ backgroundColor: "#2d2b2c" }}
@@ -122,7 +122,7 @@ const Pokedex = () => {
               autoComplete="off"
               list={"PkmnList"} />
           </div>
-          <div className={styles.bottomRow}>
+          <div className={`${styles.bottomRow} ${styles.desktopOnly}`}>
             <Image src="/bottom.png" width={150} height={15} alt="" />
           </div>
         </div>
