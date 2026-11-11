@@ -17,5 +17,10 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "three": "^0.169.0"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^11.0.1"
+    }
   }
 }
